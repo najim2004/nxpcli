@@ -1,4 +1,4 @@
-const requestLoggerTemplate = String.raw`import pinoHttp from 'pino-http';
+const requestLoggerTemplate = `import pinoHttp from 'pino-http';
 import logger from '../utils/logger';
 import config from '../config/index';
 import { IncomingMessage, ServerResponse } from 'http';
@@ -19,10 +19,10 @@ const pinoHttpMiddleware = pinoHttp({
     if (res.statusCode === 404) {
       return 'Resource not found';
     }
-    return \`\\\${req.method} \\\${req.url} completed\`;
+    return \`\${req.method} \${req.url} completed\`;
   },
   customErrorMessage: function (req: IncomingMessage) {
-    return \`Request failed: \\\${req.method} \\\${req.url}\`;
+    return \`Request failed: \${req.method} \${req.url}\`;
   },
 });
 

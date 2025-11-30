@@ -32,8 +32,8 @@ const RESERVED_KEYWORDS = [
 
 // Template markers used in generated files
 const TEMPLATE_MARKERS = {
-  IMPORT: '// <new-import-here>',
-  ROUTE: '// <new-route-here>',
+  IMPORT: '// <new-import-here> -- DO NOT REMOVE (Used by nxpcli)',
+  ROUTE: '// <new-route-here> -- DO NOT REMOVE (Used by nxpcli)',
 };
 
 // Error messages

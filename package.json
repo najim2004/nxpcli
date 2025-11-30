@@ -1,6 +1,6 @@
 {
   "name": "nxpcli",
-  "version": "1.4.1",
+  "version": "1.4.4",
   "description": "A powerful CLI tool to scaffold professional, production-ready Express.js projects with TypeScript, MongoDB, and best practices built-in.",
   "main": "src/cli/index.js",
   "bin": {

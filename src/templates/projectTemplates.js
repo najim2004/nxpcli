@@ -152,7 +152,7 @@ const appTsTemplate = `import express, { Application, Request, Response } from '
 import cors from 'cors';
 import pinoHttpMiddleware from './middlewares/requestLogger';
 
-// <new-import-here>
+// <new-import-here> -- DO NOT REMOVE (Used by nxpcli)
 
 const app: Application = express();
 
@@ -164,7 +164,7 @@ app.use(cors({
   credentials: true,
 }));
 
-// <new-route-here>
+// <new-route-here> -- DO NOT REMOVE (Used by nxpcli)
 
 // Health check route
 app.get('/', (req: Request, res: Response):void => {
@@ -215,7 +215,7 @@ async function bootstrap(): Promise<void> {
 
 bootstrap();
 `;
-const globalErrorHandlerTemplate = String.raw`import { ErrorRequestHandler, Request, Response } from 'express';
+const globalErrorHandlerTemplate = `import { ErrorRequestHandler, Request, Response } from 'express';
 import { ZodError, ZodIssue } from 'zod';
 import mongoose, { Error as MongooseError } from 'mongoose';
 import config from '../config/index';
@@ -284,7 +284,7 @@ const handleMongooseDuplicateError = (err: {
   const errorSources: IErrorSources = [
     {
       path: '',
-      message: \`\\\${extracted || 'The value'} already exists.\`,
+      message: \`\${extracted || 'The value'} already exists.\`,
     },
   ];
   return { statusCode: 409, message: 'Duplicate Key Error', errorSources };
