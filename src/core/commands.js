@@ -2,6 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const ora = require("ora");
 const { installDependenciesSequentially, initializeHusky } = require("./utils");
+const { validateName } = require("./validators");
+const { ERROR_MESSAGES, SUCCESS_MESSAGES, TEMPLATE_MARKERS } = require("./constants");
 const {
   getPackageJsonTemplate,
   tsconfigTemplate,
@@ -18,6 +20,7 @@ const {
   eslintrcTemplate,
   readmeTemplate,
   envTemplate,
+  envExampleTemplate,
   configIndexTemplate,
   notFoundTemplate,
   loggerTemplate,
@@ -33,12 +36,19 @@ const {
 } = require("../templates/moduleTemplates");
 
 const scaffoldNewProject = async (projectName) => {
+  // Validate project name
+  const validation = validateName(projectName);
+  if (!validation.valid) {
+    console.error(`\n❌ Error: ${validation.error}`);
+    process.exit(1);
+  }
+
   const projectPath = path.join(process.cwd(), projectName);
 
   const scaffoldSpinner = ora(`Scaffolding new project '${projectName}'...`).start();
 
   if (fs.existsSync(projectPath)) {
-    scaffoldSpinner.fail(`Directory ${projectName} already exists.`);
+    scaffoldSpinner.fail(ERROR_MESSAGES.DIRECTORY_EXISTS);
     process.exit(1);
   }
   fs.mkdirSync(projectPath, { recursive: true });
@@ -106,6 +116,7 @@ const scaffoldNewProject = async (projectName) => {
     { name: ".prettierrc", content: prettierrcTemplate },
     { name: "README.md", content: readmeTemplate(projectName) },
     { name: ".env", content: envTemplate },
+    { name: ".env.example", content: envExampleTemplate },
     { name: "src/app.ts", content: appTsTemplate },
     { name: "src/server.ts", content: serverTsTemplate },
     { name: "src/config/index.ts", content: configIndexTemplate },
@@ -146,24 +157,31 @@ const scaffoldNewProject = async (projectName) => {
     }
   }
 
-  console.log(`\n✅ Project '${projectName}' created successfully!`);
+  console.log(`\n✅ ${SUCCESS_MESSAGES.PROJECT_CREATED}`);
   console.log(`\nTo get started:\n`);
   console.log(`  cd ${projectName}`);
   console.log(`  npm run dev\n`);
 };
 
 const generateModule = (moduleName, hasModel) => {
+  // Validate module name
+  const validation = validateName(moduleName);
+  if (!validation.valid) {
+    console.error(`\n❌ Error: ${validation.error}`);
+    process.exit(1);
+  }
+
   const modulePath = path.join(process.cwd(), "src", "modules", moduleName);
 
   const moduleSpinner = ora(`Generating module '${moduleName}'...`).start();
 
   if (!fs.existsSync(path.join(process.cwd(), "src", "app.ts"))) {
-    moduleSpinner.fail("Error: This command must be run from project root.");
+    moduleSpinner.fail(ERROR_MESSAGES.NOT_PROJECT_ROOT);
     process.exit(1);
   }
 
   if (fs.existsSync(modulePath)) {
-    moduleSpinner.fail(`Error: Module '${moduleName}' already exists.`);
+    moduleSpinner.fail(ERROR_MESSAGES.MODULE_EXISTS);
     process.exit(1);
   }
 
@@ -193,8 +211,8 @@ const generateModule = (moduleName, hasModel) => {
   const routeName = `${moduleName}Routes`;
   const importLine = `import { ${routeName} } from './modules/${moduleName}/${moduleName}.route';`;
   const useLine = `app.use('/api/v1/${moduleName}', ${routeName});`;
-  const importMarker = "// <new-import-here>";
-  const routeMarker = "// <new-route-here>";
+  const importMarker = TEMPLATE_MARKERS.IMPORT;
+  const routeMarker = TEMPLATE_MARKERS.ROUTE;
 
   if (appContent.includes(importLine)) {
     injectionSpinner.info(`Module '${moduleName}' already injected. Skipping.`);
@@ -205,7 +223,7 @@ const generateModule = (moduleName, hasModel) => {
     injectionSpinner.succeed(`Injected module '${moduleName}' into app.ts`);
   }
 
-  console.log(`\n✅ Module '${moduleName}' created successfully!`);
+  console.log(`\n✅ ${SUCCESS_MESSAGES.MODULE_CREATED}`);
 };
 
 module.exports = {

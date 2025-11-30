@@ -145,7 +145,7 @@ const tsconfigTemplate = `{
 const nodemonTemplate = `{
   "watch": ["src"],
   "ext": "ts",
-  "exec": "nodemon --exec ts-node src/server.ts"
+  "exec": "ts-node src/server.ts"
 }
 `;
 const appTsTemplate = `import express, { Application, Request, Response } from 'express';
@@ -371,10 +371,10 @@ const validateRequest =
 export default validateRequest;
 
 `;
-const errorInterfaceTemplate = `export interface IErrorSources {
+const errorInterfaceTemplate = `export type IErrorSources = {
   path: string | number;
   message: string;
-}[]
+}[];
 `;
 module.exports = {
   getPackageJsonTemplate,

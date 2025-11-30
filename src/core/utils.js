@@ -3,8 +3,20 @@ const fs = require("fs");
 const path = require("path");
 const ora = require("ora");
 
+/**
+ * Capitalizes the first letter of a string
+ * @param {string} s - String to capitalize
+ * @returns {string} Capitalized string
+ */
 const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
+/**
+ * Installs npm packages sequentially and tracks their versions
+ * @param {string[]} packageList - Array of package names to install
+ * @param {boolean} isDev - Whether to install as dev dependencies
+ * @param {string} projectPath - Path to the project directory
+ * @returns {Promise<{failedPackages: string[], installedPackagesWithVersions: Object}>} Installation results
+ */
 async function installDependenciesSequentially(
   packageList,
   isDev = false,
@@ -65,6 +77,10 @@ async function installDependenciesSequentially(
   return { failedPackages, installedPackagesWithVersions };
 }
 
+/**
+ * Initializes Husky and lint-staged for Git hooks
+ * @param {string} projectPath - Path to the project directory
+ */
 function initializeHusky(projectPath) {
   const spinner = ora("Initializing Husky & Lint Staged...").start();
   try {
@@ -73,13 +89,48 @@ function initializeHusky(projectPath) {
       cwd: projectPath,
     });
     execSync("npx husky init", { stdio: "pipe", cwd: projectPath });
-    execSync('npx husky add .husky/pre-commit "npx lint-staged"', {
-      stdio: "pipe",
-      cwd: projectPath,
-    });
+    
+    // Write pre-commit hook content
+    const preCommitPath = path.join(projectPath, ".husky", "pre-commit");
+    fs.writeFileSync(preCommitPath, "npx lint-staged\n", { mode: 0o755 });
+    
     spinner.succeed("Husky & Lint Staged initialized successfully.");
   } catch (error) {
     spinner.fail("Failed to initialize Husky & Lint Staged.");
+  }
+}
+
+/**
+ * Checks if a command exists in the system
+ * @param {string} command - Command to check
+ * @returns {boolean} Whether command exists
+ */
+function commandExists(command) {
+  try {
+    execSync(`which ${command}`, { stdio: "pipe" });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Gets the current Node.js version
+ * @returns {string} Node.js version
+ */
+function getNodeVersion() {
+  return process.version;
+}
+
+/**
+ * Gets the current npm version
+ * @returns {string} npm version
+ */
+function getNpmVersion() {
+  try {
+    return execSync("npm --version", { encoding: "utf8" }).trim();
+  } catch {
+    return "unknown";
   }
 }
 
@@ -87,4 +138,7 @@ module.exports = {
   capitalize,
   installDependenciesSequentially,
   initializeHusky,
+  commandExists,
+  getNodeVersion,
+  getNpmVersion,
 };

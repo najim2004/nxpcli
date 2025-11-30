@@ -1,7 +1,7 @@
 {
   "name": "nxpcli",
-  "version": "1.3.2",
-  "description": "Express CLI: A CLI to scaffold professional Express.js projects.",
+  "version": "1.4.1",
+  "description": "A powerful CLI tool to scaffold professional, production-ready Express.js projects with TypeScript, MongoDB, and best practices built-in.",
   "main": "src/cli/index.js",
   "bin": {
     "nxpcli": "./src/cli/index.js"
@@ -13,11 +13,28 @@
     "cli",
     "express",
     "scaffold",
-    "generator"
+    "generator",
+    "typescript",
+    "mongodb",
+    "nodejs",
+    "backend",
+    "api"
   ],
-  "author": "",
+  "author": "Najim <itsnajim.mail@gmail.com> (https://najim.vercel.app)",
   "license": "ISC",
   "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/najim2004/nxpcli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/najim2004/nxpcli/issues"
+  },
+  "homepage": "https://github.com/najim2004/nxpcli#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "dependencies": {
     "ora": "^5.4.1",
     "commander": "^12.1.0"

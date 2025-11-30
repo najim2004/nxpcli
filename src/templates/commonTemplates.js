@@ -31,24 +31,24 @@ const prettierrcTemplate = `{
 const eslintrcTemplate = `import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import { defineConfig } from 'eslint/config';
 
-export default defineConfig([
+export default [
   eslintConfigPrettier,
   {
     files: ['**/*.ts'],
-    extends: ['@typescript-eslint/recommended', '@typescript-eslint/stylistic'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         project: './tsconfig.json',
+        ecmaVersion: 2020,
+        sourceType: 'module',
       },
     },
     plugins: {
       '@typescript-eslint': tseslint,
     },
     rules: {
-      // Add any custom rules or overrides here
+      // TypeScript specific rules
       '@typescript-eslint/explicit-function-return-type': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
@@ -58,6 +58,7 @@ export default defineConfig([
           varsIgnorePattern: '^_',
         },
       ],
+      // General rules
       'no-console': 'warn',
       'no-debugger': 'warn',
       'no-duplicate-imports': 'error',
@@ -65,11 +66,11 @@ export default defineConfig([
     },
   },
   {
-    ignores: ['dist/**', 'node_modules/**'],
+    ignores: ['dist/**', 'node_modules/**', '*.js', '*.mjs'],
   },
-]);
-
+];
 `;
+
 // src/templates/readme.template.ts
 const readmeTemplate = (projectName) => `# ${projectName} (ESM)
 
@@ -293,6 +294,20 @@ Happy Coding! 🚀
 const envTemplate = `NODE_ENV=development
 PORT=5000
 DATABASE_URL=mongodb://127.0.0.1:27017/<your_database_name>`;
+
+const envExampleTemplate = `# Environment Configuration
+# Copy this file to .env and update the values
+
+# Application Environment (development, production, test)
+NODE_ENV=development
+
+# Server Port
+PORT=5000
+
+# MongoDB Database URL
+# Format: mongodb://[username:password@]host[:port]/database
+DATABASE_URL=mongodb://127.0.0.1:27017/<your_database_name>
+`;
 const configIndexTemplate = `import dotenv from 'dotenv';
 import path from 'path';
 
@@ -342,6 +357,7 @@ module.exports = {
   eslintrcTemplate,
   readmeTemplate,
   envTemplate,
+  envExampleTemplate,
   configIndexTemplate,
   notFoundTemplate,
   loggerTemplate,

@@ -45,6 +45,7 @@ nxpcli create project <your-project-name>
 ```
 
 Example:
+
 ```bash
 nxpcli create project my-awesome-api
 ```
@@ -60,6 +61,7 @@ nxpcli create module <module-name>
 ```
 
 Example:
+
 ```bash
 nxpcli create module user
 ```
@@ -89,38 +91,132 @@ When you create a new project with `nxpcli`, it comes with a set of pre-configur
 
 ### Core Dependencies
 
-| Package       | Description                               | Install Command             | Uninstall Command               |
-|---------------|-------------------------------------------|-----------------------------|---------------------------------|
-| `express`     | Fast, unopinionated, minimalist web framework for Node.js. | `npm install express`       | `npm uninstall express`         |
-| `mongoose`    | Elegant MongoDB object modeling for Node.js. | `npm install mongoose`      | `npm uninstall mongoose`        |
-| `typescript`  | Superset of JavaScript that adds types.   | `npm install -D typescript` | `npm uninstall -D typescript`   |
-| `zod`         | TypeScript-first schema validation with static type inference. | `npm install zod`           | `npm uninstall zod`             |
-| `pino`        | Extremely fast, low-overhead logger.      | `npm install pino`          | `npm uninstall pino`            |
-| `pino-http`   | High-speed HTTP logger for Node.js.       | `npm install pino-http`     | `npm uninstall pino-http`       |
-| `cors`        | Middleware for enabling Cross-Origin Resource Sharing. | `npm install cors`          | `npm uninstall cors`            |
-| `dotenv`      | Loads environment variables from a `.env` file. | `npm install dotenv`        | `npm uninstall dotenv`          |
+| Package      | Description                                                    | Install Command             | Uninstall Command             |
+| ------------ | -------------------------------------------------------------- | --------------------------- | ----------------------------- |
+| `express`    | Fast, unopinionated, minimalist web framework for Node.js.     | `npm install express`       | `npm uninstall express`       |
+| `mongoose`   | Elegant MongoDB object modeling for Node.js.                   | `npm install mongoose`      | `npm uninstall mongoose`      |
+| `typescript` | Superset of JavaScript that adds types.                        | `npm install -D typescript` | `npm uninstall -D typescript` |
+| `zod`        | TypeScript-first schema validation with static type inference. | `npm install zod`           | `npm uninstall zod`           |
+| `pino`       | Extremely fast, low-overhead logger.                           | `npm install pino`          | `npm uninstall pino`          |
+| `pino-http`  | High-speed HTTP logger for Node.js.                            | `npm install pino-http`     | `npm uninstall pino-http`     |
+| `cors`       | Middleware for enabling Cross-Origin Resource Sharing.         | `npm install cors`          | `npm uninstall cors`          |
+| `dotenv`     | Loads environment variables from a `.env` file.                | `npm install dotenv`        | `npm uninstall dotenv`        |
 
 ### Development Dependencies
 
-| Package       | Description                               | Install Command             | Uninstall Command               |
-|---------------|-------------------------------------------|-----------------------------|---------------------------------|
-| `nodemon`     | Automatically restarts the server on file changes. | `npm install -D nodemon`    | `npm uninstall -D nodemon`      |
-| `eslint`      | Pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript. | `npm install -D eslint`     | `npm uninstall -D eslint`       |
-| `prettier`    | Opinionated code formatter.               | `npm install -D prettier`   | `npm uninstall -D prettier`     |
-| `husky`       | Makes it easy to use Git hooks.           | `npm install -D husky`      | `npm uninstall -D husky`        |
-| `lint-staged` | Run linters on git staged files.          | `npm install -D lint-staged`| `npm uninstall -D lint-staged`  |
-| `ts-node`     | TypeScript execution and REPL for Node.js. | `npm install -D ts-node`    | `npm uninstall -D ts-node`      |
-| `pino-pretty` | A core utility for `pino` that makes logs more readable. | `npm install -D pino-pretty`| `npm uninstall -D pino-pretty`  |
+| Package       | Description                                                                                     | Install Command              | Uninstall Command              |
+| ------------- | ----------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------ |
+| `nodemon`     | Automatically restarts the server on file changes.                                              | `npm install -D nodemon`     | `npm uninstall -D nodemon`     |
+| `eslint`      | Pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript. | `npm install -D eslint`      | `npm uninstall -D eslint`      |
+| `prettier`    | Opinionated code formatter.                                                                     | `npm install -D prettier`    | `npm uninstall -D prettier`    |
+| `husky`       | Makes it easy to use Git hooks.                                                                 | `npm install -D husky`       | `npm uninstall -D husky`       |
+| `lint-staged` | Run linters on git staged files.                                                                | `npm install -D lint-staged` | `npm uninstall -D lint-staged` |
+| `ts-node`     | TypeScript execution and REPL for Node.js.                                                      | `npm install -D ts-node`     | `npm uninstall -D ts-node`     |
+| `pino-pretty` | A core utility for `pino` that makes logs more readable.                                        | `npm install -D pino-pretty` | `npm uninstall -D pino-pretty` |
 
 ## Environment Variables
 
 The project uses the following environment variables. You can set them in a `.env` file in the root of your project.
 
-| Variable       | Description                                       | Default                                         |
-|----------------|---------------------------------------------------|-------------------------------------------------|
-| `NODE_ENV`     | The environment mode.                             | `development`                                   |
-| `PORT`         | The port the server will run on.                  | `5000`                                          |
+| Variable       | Description                                      | Default                                          |
+| -------------- | ------------------------------------------------ | ------------------------------------------------ |
+| `NODE_ENV`     | The environment mode.                            | `development`                                    |
+| `PORT`         | The port the server will run on.                 | `5000`                                           |
 | `DATABASE_URL` | The connection string for your MongoDB database. | `mongodb://127.0.0.1:27017/<your_database_name>` |
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+#### Issue: "Module not found" error
+
+**Solution:** Make sure you've installed nxpcli globally:
+
+```bash
+npm install -g nxpcli@latest
+```
+
+#### Issue: "Permission denied" error
+
+**Solution:** On Linux/Mac, you may need to use sudo:
+
+```bash
+sudo npm install -g nxpcli
+```
+
+Or configure npm to install global packages without sudo:
+
+```bash
+npm config set prefix ~/.npm-global
+export PATH=~/.npm-global/bin:$PATH
+```
+
+#### Issue: Invalid project name error
+
+**Solution:** Project names must:
+
+- Start with a lowercase letter
+- Contain only lowercase letters, numbers, and hyphens
+- Not be a reserved keyword (node, express, npm, etc.)
+
+Valid examples: `my-app`, `api-server`, `backend2024`
+
+#### Issue: Husky installation fails
+
+**Solution:** This is usually not critical. You can manually initialize Husky later:
+
+```bash
+cd your-project
+npx husky install
+npx husky add .husky/pre-commit "npx lint-staged"
+```
+
+#### Issue: MongoDB connection error
+
+**Solution:** Make sure:
+
+1. MongoDB is installed and running
+2. Update `DATABASE_URL` in `.env` file
+3. Check the connection string format
+
+---
+
+## FAQ
+
+**Q: Can I use a different database?**  
+A: Currently, nxpcli generates MongoDB-based projects. You can manually replace Mongoose with your preferred ORM (Prisma, TypeORM, etc.).
+
+**Q: Can I customize the generated templates?**  
+A: Not yet, but this feature is planned for future releases.
+
+**Q: Does it support JavaScript instead of TypeScript?**  
+A: No, nxpcli generates TypeScript projects only for better type safety.
+
+**Q: Can I use this for production?**  
+A: Yes! The generated projects follow best practices and are production-ready.
+
+**Q: How do I update dependencies in generated projects?**  
+A: Run `npm update` in your project directory, or use `npm outdated` to check for updates.
+
+---
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+---
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history and changes.
+
+---
+
+## License
+
+ISC License - see [LICENSE](LICENSE) file for details.
 
 ---
 

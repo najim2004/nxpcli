@@ -1,0 +1,49 @@
+# Test directories
+test/
+tests/
+__tests__/
+*.test.js
+*.spec.js
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+
+# Documentation source (keep compiled docs)
+docs/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Editor configs (optional, but good practice)
+.editorconfig
+
+# Examples and demos (if any)
+examples/
+demo/
