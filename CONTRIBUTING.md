@@ -44,7 +44,7 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 1. Clone your fork:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/nxpcli.git
+git clone https://github.com/najim2004/nxpcli.git
 cd nxpcli
 ```
 
